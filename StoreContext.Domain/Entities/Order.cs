@@ -1,3 +1,5 @@
+
+using Flunt.Validations;
 using StoreContext.Domain.Enums;
 using StoreContext.Shared.Entities;
 
@@ -12,6 +14,10 @@ public class Order : Entity
         decimal deliveryFee,
         Discount discount)
     {
+        AddNotifications(new Contract<Order>()
+            .Requires()
+            .IsNull(customer, "Customer", "Invalid Customer."));
+
         Customer = customer;
         Date = DateTime.Now;
         Number = Guid.NewGuid().ToString().Substring(0, 8);
@@ -36,7 +42,12 @@ public class Order : Entity
     public EOrderStatus Status { get; private set; }
 
     public void AddItem(Product product, int quantity)
-        => _items.Add(new OrderItem(product, quantity));
+    {
+        var item = new OrderItem(product, quantity);
+
+        if(item.IsValid)
+            _items.Add(new OrderItem(product, quantity));
+    }
 
     public decimal Total()
     {

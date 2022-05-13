@@ -1,6 +1,9 @@
+
+using Flunt.Notifications;
+
 namespace StoreContext.Shared.Entities;
 
-public class Entity
+public class Entity : Notifiable<Notification>
 {
     public Entity()
     {
