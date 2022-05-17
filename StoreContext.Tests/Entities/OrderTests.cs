@@ -73,4 +73,24 @@ public class OrderTests
 
         Assert.AreEqual(0, order.Items.Count);
     }
+
+    [TestMethod]
+    [TestCategory("Domain")]
+    public void ShouldReturnFiftyForValidOrders()
+    {
+        var order = new Order(_costumer, 0, null);
+        order.AddItem(_product, 5);
+
+        Assert.AreEqual(50, order.Total());
+    }
+
+    [TestMethod]
+    [TestCategory("Domain")]
+    public void ShouldReturnSixtyForOrderWithDeliveryFeeOfTen()
+    {
+        var order = new Order(_costumer, 10, null);
+        order.AddItem(_product, 5);
+
+        Assert.AreEqual(60, order.Total());
+    }
 }
