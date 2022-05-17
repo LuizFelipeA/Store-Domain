@@ -16,7 +16,7 @@ public class Order : Entity
     {
         AddNotifications(new Contract<Order>()
             .Requires()
-            .IsNull(customer, "Customer", "Invalid Customer."));
+            .IsNotNull(customer, "Customer", "Invalid Customer."));
 
         Customer = customer;
         Date = DateTime.Now;
